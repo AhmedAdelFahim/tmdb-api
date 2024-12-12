@@ -4,6 +4,7 @@ import configuration from './config/configuration';
 import { ConfigModule } from '@nestjs/config';
 import { RedisModule } from './caching/redis.module';
 import { KnexModule } from './database/knex.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { KnexModule } from './database/knex.module';
     }),
     RedisModule,
     KnexModule,
+    UsersModule,
   ],
 })
 export class AppModule {}
