@@ -2,6 +2,7 @@ import { Module, Global, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Knex } from 'knex';
 import knex from 'knex';
+import { Model } from 'objection';
 
 @Global()
 @Module({
@@ -22,6 +23,7 @@ import knex from 'knex';
         const knexInstance = knex(knexConfig);
         try {
           await knexInstance.raw('SELECT 1');
+          Model.knex(knexInstance);
           Logger.verbose('Connected to postgres');
         } catch (e) {
           Logger.error(e.message);
