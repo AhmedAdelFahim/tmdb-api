@@ -9,7 +9,8 @@ export class AllExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
 
     const error = exceptionMapper(exception, {
-      parseMongooseExceptions: true,
+      parseKnexJSExceptions: true,
+      parseObjectionJSExceptions: true,
       loggerOptions: {
         console: {
           colored: true,

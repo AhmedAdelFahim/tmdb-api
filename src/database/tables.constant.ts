@@ -1,5 +1,5 @@
 const TABLES = {
-  USER: 'USER',
+  USER: 'user',
 };
 
 export default TABLES;
