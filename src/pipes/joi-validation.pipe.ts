@@ -8,6 +8,7 @@ export class JoiValidationPipe implements PipeTransform {
   transform(originalValue: unknown) {
     const { error, value } = this.schema.validate(originalValue);
     if (error) {
+      console.log(error);
       throw new JoiValidationException(error);
     }
     return value;

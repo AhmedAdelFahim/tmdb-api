@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { createHash } from 'crypto';
 import Redis from 'ioredis';
 
 @Injectable()
@@ -14,5 +15,20 @@ export class RedisService {
 
   async getKey(key) {
     return this.clientRedis.get(key);
+  }
+
+  hashString(str: string) {
+    return createHash('sha256').update(str).digest('base64');
+  }
+  getKeyForCaching(filter: Record<string, any>) {
+    const mappedObj = Object.keys(filter)
+      .sort()
+      .reduce((finalObject, key) => {
+        finalObject[key] = filter[key];
+        return finalObject;
+      }, {});
+    const mappedObjStr = JSON.stringify(mappedObj);
+    const key = this.hashString(mappedObjStr);
+    return key;
   }
 }
