@@ -9,5 +9,6 @@ export default () => {
     DB_URL: Joi.string().trim().required(),
     REDIS_URL: Joi.string().trim().required(),
     TOKEN_SECRET: Joi.string().trim().required(),
+    TMDB_API_KEY: Joi.string().trim().required(),
   });
 };
