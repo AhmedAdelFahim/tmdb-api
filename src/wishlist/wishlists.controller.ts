@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Req,
+  Res,
   UseGuards,
 } from '@nestjs/common';
 import { WishlistsService } from './wishlists.service';
@@ -33,18 +34,19 @@ export class WishlistsController {
   @Post('list')
   async list(
     @Req() req: any,
+    @Res() res: any,
     @Body(new JoiValidationPipe(schema.list)) body: any,
   ) {
-    const res = await this.wishlistsService.filter(body, req.user.id);
-    return {
+    const wishlist = await this.wishlistsService.filter(body, req.user.id);
+    return res.status(HttpStatus.OK).send({
       data: {
-        movies: res.results,
+        movies: wishlist.results,
         page: {
-          total_items: res.total,
-          total_pages: Math.ceil(res.total / body.limit),
+          total_items: wishlist.total,
+          total_pages: Math.ceil(wishlist.total / body.limit),
         },
       },
-    };
+    });
   }
 
   @ApiOperation({ summary: 'add To Wishlist' })
@@ -67,7 +69,7 @@ export class WishlistsController {
     };
   }
 
-  @ApiOperation({ summary: 'List movies' })
+  @ApiOperation({ summary: 'remove From Wishlist' })
   @ApiParam({
     type: 'number',
     name: 'movie_id',

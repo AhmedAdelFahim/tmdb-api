@@ -31,17 +31,28 @@ describe('WishlistController (e2e)', () => {
     tmdb_movie_id: movie.tmdb_movie_id,
   };
 
-  const user = {
+  const user1 = {
     name: 'ahmed',
     email: 'ahmed.adel@email.com',
     hashedPassword:
       '$2b$10$G1iw3TBisHfrUCbUvyM1lO1nER43UUOHMiBnMEVCK3mm1qFiCnpcW',
     password: 'P@ssw0rd',
   };
+
+  const user2 = {
+    name: 'ahmed',
+    email: 'ahmed.adel.fahim@email.com',
+    hashedPassword:
+      '$2b$10$G1iw3TBisHfrUCbUvyM1lO1nER43UUOHMiBnMEVCK3mm1qFiCnpcW',
+    password: 'P@ssw0rd',
+  };
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let insertedMovie;
-  let insertedUser;
-  let accessToken;
+  let insertedUser1;
+  let accessToken1;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  let insertedUser2;
+  let accessToken2;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -65,19 +76,44 @@ describe('WishlistController (e2e)', () => {
       .returning('*');
 
     await knexInstance.table(TABLES.USER).del();
-    insertedUser = (
+    insertedUser1 = (
       await knexInstance
         .table(TABLES.USER)
         .insert({
-          name: user.name,
-          email: user.email,
-          password: user.hashedPassword,
+          name: user1.name,
+          email: user1.email,
+          password: user1.hashedPassword,
         })
         .returning('*')
     )[0];
-
-    accessToken = (
-      await usersService.signIn({ email: user.email, password: user.password })
+    insertedUser2 = (
+      await knexInstance
+        .table(TABLES.USER)
+        .insert({
+          name: user2.name,
+          email: user2.email,
+          password: user2.hashedPassword,
+        })
+        .returning('*')
+    )[0];
+    await knexInstance
+      .table(TABLES.WISHLIST)
+      .insert({
+        user_id: insertedUser1.id,
+        movie_id: insertedMovie.id,
+      })
+      .returning('*');
+    accessToken1 = (
+      await usersService.signIn({
+        email: user1.email,
+        password: user1.password,
+      })
+    ).accessToken;
+    accessToken2 = (
+      await usersService.signIn({
+        email: user2.email,
+        password: user2.password,
+      })
     ).accessToken;
     await app.init();
   });
@@ -95,9 +131,16 @@ describe('WishlistController (e2e)', () => {
   it('/wishlists/{movie_id} (POST) ', () => {
     return request(app.getHttpServer())
       .post(`/wishlists/${insertedMovie.id}`)
-      .set({ authorization: `Bearer ${accessToken}` })
+      .set({ authorization: `Bearer ${accessToken2}` })
       .expect(201)
       .expect({ data: { message: 'Added successfully', code: 201 } });
+  });
+
+  it('/wishlists/list (POST) ', () => {
+    return request(app.getHttpServer())
+      .post(`/wishlists/list`)
+      .set({ authorization: `Bearer ${accessToken1}` })
+      .expect(200);
   });
 
   afterAll(async () => {
