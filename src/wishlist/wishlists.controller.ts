@@ -15,8 +15,8 @@ import {
   ApiOperation,
   ApiParam,
 } from '@nestjs/swagger';
-import { AuthGuard } from 'src/guards/auth.guard';
-import { JoiValidationPipe } from 'src/pipes/joi-validation.pipe';
+import { AuthGuard } from '../guards/auth.guard';
+import { JoiValidationPipe } from '../pipes/joi-validation.pipe';
 import schema from './wishlists-validation.schema';
 import { WishlistFilter } from './wishlists.type';
 
@@ -47,7 +47,7 @@ export class WishlistsController {
     };
   }
 
-  @ApiOperation({ summary: 'List movies' })
+  @ApiOperation({ summary: 'add To Wishlist' })
   @ApiParam({
     type: 'number',
     name: 'movie_id',
@@ -62,7 +62,7 @@ export class WishlistsController {
     return {
       data: {
         message: 'Added successfully',
-        code: HttpStatus.OK,
+        code: HttpStatus.CREATED,
       },
     };
   }

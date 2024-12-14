@@ -9,7 +9,10 @@ export class WishlistsRepository extends BaseRepository<IWishlist> {
     super(WishlistsModel, knex);
   }
 
-  async createManyOnConflict(items: IWishlist[], options: ICreationOptions = {}) {
+  async createManyOnConflict(
+    items: IWishlist[],
+    options: ICreationOptions = {},
+  ) {
     const results = await this.model
       .query(options?.trx)
       .insert(items)

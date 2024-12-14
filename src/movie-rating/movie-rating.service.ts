@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { MovieRatingRepository } from './movie-rating.repository';
-import { MoviesRepository } from 'src/movies/movies.repository';
+import { MoviesRepository } from '../movies/movies.repository';
 
 @Injectable()
 export class MovieRatingService {

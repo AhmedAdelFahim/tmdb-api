@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MovieRatingService } from './movie-rating.service';
 import { MovieRatingRepository } from './movie-rating.repository';
 import { MovieRatingController } from './movie-rating.controller';
-import { MoviesModule } from 'src/movies/movies.module';
+import { MoviesModule } from '../movies/movies.module';
 
 @Module({
   imports: [MoviesModule],

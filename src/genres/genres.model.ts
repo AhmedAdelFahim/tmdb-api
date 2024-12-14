@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Model } from 'objection';
-import TABLES from 'src/database/tables.constant';
+import TABLES from '../database/tables.constant';
 
 @Injectable()
 export class GenresModel extends Model {

@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { MoviesTypes } from './tmdb-integration.type';
 import axios from 'axios';
-import { JobsManagerService } from 'src/jobs-manager/jobs-manager.service';
-import { IMovie } from 'src/movies/movies.type';
-import { MoviesService } from 'src/movies/movies.service';
-import { IGenre } from 'src/genres/genres.type';
-import { GenresService } from 'src/genres/genres.service';
+import { JobsManagerService } from '../jobs-manager/jobs-manager.service';
+import { IMovie } from '../movies/movies.type';
+import { MoviesService } from '../movies/movies.service';
+import { IGenre } from '../genres/genres.type';
+import { GenresService } from '../genres/genres.service';
 
 @Injectable()
 export class TMDBIntegrationService {

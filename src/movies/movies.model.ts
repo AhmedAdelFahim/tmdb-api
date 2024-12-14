@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import path from 'node:path';
 import { Model } from 'objection';
-import TABLES from 'src/database/tables.constant';
+import TABLES from '../database/tables.constant';
 
 @Injectable()
 export class MoviesModel extends Model {

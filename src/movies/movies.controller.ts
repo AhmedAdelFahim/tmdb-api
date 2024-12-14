@@ -1,8 +1,8 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
 import { ApiBody, ApiOperation } from '@nestjs/swagger';
 import { MoviesService } from './movies.service';
 import schema from './movies-validation.schema';
-import { JoiValidationPipe } from 'src/pipes/joi-validation.pipe';
+import { JoiValidationPipe } from '../pipes/joi-validation.pipe';
 import { MovieFilter } from './movies.type';
 
 @Controller('movies')
@@ -14,16 +14,19 @@ export class MoviesController {
     description: 'filter options',
   })
   @Post('list')
-  async list(@Body(new JoiValidationPipe(schema.list)) body: any) {
-    const res = await this.moviesService.filter(body);
-    return {
+  async list(
+    @Body(new JoiValidationPipe(schema.list)) body: any,
+    @Res() res: any,
+  ) {
+    const movies = await this.moviesService.filter(body);
+    return res.status(HttpStatus.OK).send({
       data: {
-        movies: res.results,
+        movies: movies.results,
         page: {
-          total_items: res.total,
-          total_pages: Math.ceil(res.total / body.limit),
+          total_items: movies.total,
+          total_pages: Math.ceil(movies.total / body.limit),
         },
       },
-    };
+    });
   }
 }

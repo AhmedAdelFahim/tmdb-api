@@ -2,8 +2,8 @@ import { Injectable, Logger } from '@nestjs/common';
 import R from 'ramda';
 import { WishlistsRepository } from './wishlists.repository';
 import { WishlistFilter } from './wishlists.type';
-import TABLES from 'src/database/tables.constant';
-import { RedisService } from 'src/caching/redis.service';
+import TABLES from '../database/tables.constant';
+import { RedisService } from '../caching/redis.service';
 
 @Injectable()
 export class WishlistsService {

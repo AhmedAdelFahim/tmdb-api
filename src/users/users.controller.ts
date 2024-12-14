@@ -1,5 +1,5 @@
-import { Body, Controller, HttpStatus, Post } from '@nestjs/common';
-import { JoiValidationPipe } from 'src/pipes/joi-validation.pipe';
+import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
+import { JoiValidationPipe } from '../pipes/joi-validation.pipe';
 import schema from './users-validation.schema';
 import { UsersService } from './users.service';
 import { IUser, LoginDto, User } from './users.type';
@@ -32,12 +32,15 @@ export class UsersController {
     description: 'data for user login',
   })
   @Post('login')
-  async login(@Body(new JoiValidationPipe(schema.login)) body: LoginDto) {
-    const res = await this.usersService.signIn(body);
-    return {
-      data: res,
+  async login(
+    @Body(new JoiValidationPipe(schema.login)) body: LoginDto,
+    @Res() res: any,
+  ) {
+    const result = await this.usersService.signIn(body);
+    return res.status(HttpStatus.OK).send({
+      data: result,
       message: 'User logged in',
       statusCode: HttpStatus.OK,
-    };
+    });
   }
 }

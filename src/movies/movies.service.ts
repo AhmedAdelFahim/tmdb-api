@@ -2,9 +2,9 @@ import { Injectable, Logger } from '@nestjs/common';
 import R from 'ramda';
 import { MoviesRepository } from './movies.repository';
 import { IMovie, MovieFilter } from './movies.type';
-import { GenreMoviesRepository } from 'src/genre-movies/genre-movies.repository';
-import TABLES from 'src/database/tables.constant';
-import { RedisService } from 'src/caching/redis.service';
+import { GenreMoviesRepository } from '../genre-movies/genre-movies.repository';
+import TABLES from '../database/tables.constant';
+import { RedisService } from '../caching/redis.service';
 
 @Injectable()
 export class MoviesService {

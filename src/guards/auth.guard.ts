@@ -2,7 +2,7 @@ import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
-import ERROR_CODE_LIST from 'src/filters/error-codes';
+import ERROR_CODE_LIST from '../filters/error-codes';
 import { UnauthorizedException } from 'unified-errors-handler';
 
 @Injectable()

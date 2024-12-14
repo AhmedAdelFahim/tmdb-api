@@ -6,7 +6,7 @@ import { IUser, LoginDto } from './users.type';
 import { UnauthorizedException } from 'unified-errors-handler';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import ERROR_CODE_LIST from 'src/filters/error-codes';
+import ERROR_CODE_LIST from '../filters/error-codes';
 @Injectable()
 export class UsersService {
   constructor(

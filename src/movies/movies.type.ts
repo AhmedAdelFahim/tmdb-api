@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { MoviesTypes } from 'src/tmdb-integration/tmdb-integration.type';
+import { MoviesTypes } from '../tmdb-integration/tmdb-integration.type';
 
 export interface IMovie {
   id?: number;

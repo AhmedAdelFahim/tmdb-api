@@ -16,7 +16,7 @@ import { Model } from 'objection';
           client: 'pg', // Change to your database client (e.g., 'mysql', 'sqlite3', etc.)
           connection: DB_URL,
           pool: { min: 2, max: 10 },
-          debug: true,
+          // debug: true,
           migrations: {
             tableName: 'knex_migrations',
           },

@@ -1,8 +1,8 @@
 import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { MovieRatingService } from './movie-rating.service';
 import { ApiBearerAuth, ApiBody, ApiOperation } from '@nestjs/swagger';
-import { AuthGuard } from 'src/guards/auth.guard';
-import { JoiValidationPipe } from 'src/pipes/joi-validation.pipe';
+import { AuthGuard } from '../guards/auth.guard';
+import { JoiValidationPipe } from '../pipes/joi-validation.pipe';
 import schema from './movie-rating-validation.schema';
 import { RateMovie } from './movie-rating.type';
 
