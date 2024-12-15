@@ -39,6 +39,7 @@ describe('MoviesController (e2e)', () => {
 
     app = moduleFixture.createNestApplication();
     knexInstance = app.get('KNEX_CONNECTION');
+    await knexInstance.table(TABLES.MOVIE_RATING).del();
     await knexInstance.table(TABLES.WISHLIST).del();
     await knexInstance.table(TABLES.GENRE).del();
     await knexInstance.table(TABLES.GENRE_MOVIE).del();
@@ -75,6 +76,7 @@ describe('MoviesController (e2e)', () => {
   });
 
   afterAll(async () => {
+    await knexInstance.table(TABLES.MOVIE_RATING).del();
     await knexInstance.table(TABLES.WISHLIST).del();
     await knexInstance.table(TABLES.GENRE).del();
     await knexInstance.table(TABLES.GENRE_MOVIE).del();

@@ -1,4 +1,12 @@
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpStatus,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { MovieRatingService } from './movie-rating.service';
 import { ApiBearerAuth, ApiBody, ApiOperation } from '@nestjs/swagger';
 import { AuthGuard } from '../guards/auth.guard';
@@ -19,15 +27,16 @@ export class MovieRatingController {
   @Post('rate-movie')
   async rateMovie(
     @Req() req: any,
+    @Res() res: any,
     @Body(new JoiValidationPipe(schema.rateMovie)) body: RateMovie,
   ) {
-    const res = await this.movieRatingService.rateMovie(
+    const result = await this.movieRatingService.rateMovie(
       body.movie_id,
       req.user.id,
       body.rating,
     );
-    return {
-      data: res,
-    };
+    return res.status(HttpStatus.OK).send({
+      data: result,
+    });
   }
 }
