@@ -28,6 +28,7 @@ describe('UsersController (e2e)', () => {
     app = moduleFixture.createNestApplication();
     knexInstance = app.get('KNEX_CONNECTION');
     await knexInstance.table(TABLES.WISHLIST).del();
+    await knexInstance.table(TABLES.MOVIE_RATING).del();
     await knexInstance.table(TABLES.USER).del();
     insertedUser = (
       await knexInstance

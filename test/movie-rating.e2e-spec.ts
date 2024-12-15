@@ -8,7 +8,7 @@ import TABLES from '../src/database/tables.constant';
 import { MoviesTypes } from '../src/tmdb-integration/tmdb-integration.type';
 import { UsersService } from '../src/users/users.service';
 
-describe('WishlistController (e2e)', () => {
+describe('MovieRatingController (e2e)', () => {
   let app: INestApplication;
   let knexInstance: Knex;
   const movie = {
@@ -62,6 +62,7 @@ describe('WishlistController (e2e)', () => {
     app = moduleFixture.createNestApplication();
     knexInstance = app.get('KNEX_CONNECTION');
     const usersService = app.get(UsersService);
+    await knexInstance.table(TABLES.MOVIE_RATING).del();
     await knexInstance.table(TABLES.WISHLIST).del();
     await knexInstance.table(TABLES.GENRE).del();
     await knexInstance.table(TABLES.GENRE_MOVIE).del();
@@ -128,12 +129,16 @@ describe('WishlistController (e2e)', () => {
     await app.init();
   });
 
-  it('/wishlists/{movie_id} (POST) ', () => {
+  it('/movie-rating (POST) ', () => {
     return request(app.getHttpServer())
-      .post(`/wishlists/${insertedMovie.id}`)
+      .post(`/movie-rating/rate-movie`)
+      .send({
+        movie_id: insertedMovie.id,
+        rating: 4,
+      })
       .set({ authorization: `Bearer ${accessToken2}` })
-      .expect(201)
-      .expect({ data: { message: 'Added successfully', code: 201 } });
+      .expect(200)
+      .expect({ data: { rate_count: '1', rate: '4.0000000000000000' } });
   });
 
   it('/wishlists/list (POST) ', () => {
@@ -157,6 +162,7 @@ describe('WishlistController (e2e)', () => {
   });
 
   afterAll(async () => {
+    await knexInstance.table(TABLES.MOVIE_RATING).del();
     await knexInstance.table(TABLES.GENRE).del();
     await knexInstance.table(TABLES.WISHLIST).del();
     await knexInstance.table(TABLES.GENRE_MOVIE).del();
