@@ -8,6 +8,7 @@ export async function up(knex: Knex): Promise<void> {
     table.increments();
     table.string('tmdb_movie_id');
     table.string('tmdb_genre_id');
+    table.foreign('tmdb_movie_id').references(`${TABLES.MOVIE}.tmdb_movie_id`);
     table.unique(['tmdb_genre_id', 'tmdb_movie_id']);
     table.timestamps(null, true);
   });

@@ -77,11 +77,6 @@ export class TMDBIntegrationService {
   }
 
   async mapMoviesResult(results, type: MoviesTypes) {
-    // const genres = await this.genresService.getAll();
-    // const mappedGenres = genres.reduce((acc, genre: IGenre) => {
-    //   acc[genre.tmdb_genre_id] = genre.name;
-    //   return acc;
-    // }, {});
     return results.map((movie): IMovie => {
       return {
         title: movie.title,
